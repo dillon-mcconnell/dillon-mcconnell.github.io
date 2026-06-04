@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dillon — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000814;
+    --bg-soft: #001d3d;
+    --surface: #001d3d;
+    --line: #003566;
+    --text: #eef2f6;
+    --muted: #8497ad;
+    --faint: #466184;
+    --accent: #ffc300;
+    --accent-soft: #ffd60a;
+    --red: #ffd60a;
+    --yellow: #ffc300;
+    --display: "Fraunces", Georgia, serif;
+    --body: "Hanken Grotesk", system-ui, sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 350;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* grain + atmosphere */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(circle, rgba(255,195,0,0.12), transparent 65%);
+    filter: blur(40px);
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 32px;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(0,8,20,0.85), rgba(0,8,20,0));
+    transition: padding 0.3s ease;
+  }
+  nav.shrink { padding: 14px 32px; background: rgba(0,8,20,0.92); border-bottom: 1px solid var(--line); }
+  .brand { font-family: var(--mono); font-size: 14px; letter-spacing: 0.02em; color: var(--text); text-decoration: none; }
+  .brand b { color: var(--red); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  /* ---------- hero ---------- */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 0 80px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+    opacity: 0; animation: rise 0.7s ease 0.1s forwards;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.8rem, 8vw, 5.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+  h1 .ln { display: block; opacity: 0; transform: translateY(24px); animation: rise 0.9s cubic-bezier(.2,.7,.3,1) forwards; }
+  h1 .ln:nth-child(1) { animation-delay: 0.2s; }
+  h1 .ln:nth-child(2) { animation-delay: 0.32s; }
+  h1 em { font-style: italic; color: var(--red); }
+  .lead {
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.65;
+    opacity: 0; animation: rise 0.9s ease 0.5s forwards;
+  }
+  .lead strong { color: var(--text); font-weight: 500; }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 44px;
+    flex-wrap: wrap;
+    opacity: 0; animation: rise 0.9s ease 0.65s forwards;
+  }
+  .hero-meta a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--line);
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .hero-meta a:hover { color: var(--accent); border-color: var(--accent); }
+  .hero-meta a span { color: var(--faint); }
+
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- section heads ---------- */
+  section { padding: 90px 0; }
+  .shead {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  .shead .num { font-family: var(--mono); font-size: 13px; color: var(--yellow); }
+  .shead h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -0.01em;
+  }
+  .shead .rule { flex: 1; height: 1px; background: var(--line); align-self: center; }
+
+  /* ---------- about ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .about-grid p { font-size: 1.08rem; color: var(--text); margin-bottom: 20px; }
+  .about-grid p:last-child { margin-bottom: 0; color: var(--muted); }
+  .sidecard {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px;
+    background: var(--surface);
+    height: fit-content;
+  }
+  .sidecard h4 { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 5px 11px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .chip:hover { color: var(--text); border-color: var(--accent); background: rgba(255,195,0,0.07); }
+
+  /* ---------- work ---------- */
+  .project {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: padding-left 0.3s ease;
+  }
+  .project:last-child { border-bottom: 1px solid var(--line); }
+  .project:hover { padding-left: 14px; }
+  .project::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+  .project:hover::before { transform: scaleY(1); }
+  .p-year { font-family: var(--mono); font-size: 13px; color: var(--faint); padding-top: 5px; }
+  .p-title { font-family: var(--display); font-size: 1.5rem; font-weight: 400; margin-bottom: 8px; transition: color 0.2s; }
+  .project:hover .p-title { color: var(--accent); }
+  .p-desc { color: var(--muted); font-size: 1rem; max-width: 540px; margin-bottom: 14px; }
+  .p-tags { display: flex; gap: 14px; flex-wrap: wrap; }
+  .p-tags span { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+  .p-arrow { font-family: var(--mono); font-size: 22px; color: var(--faint); padding-top: 2px; transition: transform 0.3s, color 0.3s; }
+  .project:hover .p-arrow { color: var(--accent); transform: translate(4px, -4px); }
+  @media (max-width: 620px) {
+    .project { grid-template-columns: 1fr; gap: 10px; }
+    .p-arrow { display: none; }
+  }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: center; padding: 110px 0 90px; }
+  .contact .eyebrow { animation: none; opacity: 1; }
+  .contact h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    letter-spacing: -0.02em;
+    margin: 16px 0 36px;
+  }
+  .contact h2 em { font-style: italic; color: var(--red); }
+  .cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 16px 34px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,195,0,0.3); }
+  .social { display: flex; gap: 26px; justify-content: center; margin-top: 40px; }
+  .social a { font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .social a:hover { color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="brand">dillon<b>.</b>dev</a>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#work">work</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <header>
+    <p class="eyebrow">// Data Analyst · Indianapolis, IN</p>
+    <h1>
+      <span class="ln">I turn messy data into</span>
+      <span class="ln"><em>decisions</em> people trust.</span>
+    </h1>
+    <p class="lead">
+      I'm Dillon — I work at the intersection of <strong>investment research</strong>,
+      <strong>analytics</strong>, and <strong>building things on the web</strong>. From fund
+      diligence to side projects, I like making complex things legible.
+    </p>
+    <div class="hero-meta">
+      <a href="#work">Selected work <span>↓</span></a>
+      <a href="mailto:you@example.com">Get in touch <span>↗</span></a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+    </div>
+  </header>
+</div>
+
+<div class="wrap">
+  <section id="about">
+    <div class="shead reveal">
+      <span class="num">01</span>
+      <h2>About</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="about-grid reveal">
+      <div>
+        <p>
+          I'm an analyst focused on investment funds and financial data, with a background in
+          management science. Day to day that means querying equity data, untangling fund
+          methodology, and writing explanations a client can actually follow.
+        </p>
+        <p>
+          Outside the spreadsheet I build small web apps to scratch my own itches — interactive
+          tools, data visualizations, and the occasional weekend project. I care about clarity:
+          in the analysis, in the writing, and in the interface.
+        </p>
+        <p>
+          Currently learning more about machine learning and always looking for a good problem
+          to dig into.
+        </p>
+      </div>
+      <div class="sidecard">
+        <h4>Toolkit</h4>
+        <div class="stack">
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Amazon Athena</span>
+          <span class="chip">pandas</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">HTML / CSS</span>
+          <span class="chip">Excel</span>
+          <span class="chip">Git</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="shead reveal">
+      <span class="num">02</span>
+      <h2>Selected Work</h2>
+      <span class="rule"></span>
+    </div>
+
+    <a class="project reveal" href="#" target="_blank" rel="noopener">
+      <div class="p-year">2025</div>
+      <div>
+        <div class="p-title">Fund Tax-Cost Ratio Investigation</div>
+        <div class="p-desc">
+          Traced a sharp change in a covered-call ETF's Morningstar tax cost ratio and turned the
+          methodology into a plain-language explainer for clients.
+        </div>
+        <div class="p-tags"><span>Athena</span><span>Python</span><span>Fund Analysis</span></div>
+      </div>
+      <div class="p-arrow">↗</div>
+    </a>
+
+    <a class="project reveal" href="#" target="_blank" rel="noopener">
+      <div class="p-year">2025</div>
+      <div>
+        <div class="p-title">College Basketball Home & Distance Effects</div>
+        <div class="p-desc">
+          A data study on how travel distance and home advantage shape team performance, using
+          CBBpy for game data and GeoPy for geographic analysis.
+        </div>
+        <div class="p-tags"><span>Python</span><span>CBBpy</span><span>GeoPy</span></div>
+      </div>
+      <div class="p-arrow">↗</div>
+    </a>
+
+    <a class="project reveal" href="#" target="_blank" rel="noopener">
+      <div class="p-year">2024</div>
+      <div>
+        <div class="p-title">Deadlock Item Cheat Sheet</div>
+        <div class="p-desc">
+          A fast, filterable React reference for in-game items — built to be glanceable during a
+          match instead of digging through wikis.
+        </div>
+        <div class="p-tags"><span>React</span><span>JavaScript</span></div>
+      </div>
+      <div class="p-arrow">↗</div>
+    </a>
+
+    <a class="project reveal" href="#" target="_blank" rel="noopener">
+      <div class="p-year">2024</div>
+      <div>
+        <div class="p-title">CityLog — Travel Logging Concept</div>
+        <div class="p-desc">
+          A travel app concept blending Letterboxd-style city logging with Wanderlog-style
+          itinerary building. Part product design, part front-end prototype.
+        </div>
+        <div class="p-tags"><span>Product</span><span>Front-end</span><span>UX</span></div>
+      </div>
+      <div class="p-arrow">↗</div>
+    </a>
+
+    <a class="project reveal" href="#" target="_blank" rel="noopener">
+      <div class="p-year">2024</div>
+      <div>
+        <div class="p-title">Book Summary PWA</div>
+        <div class="p-desc">
+          A GitHub Pages progressive web app that generates book summaries, using a Cloudflare
+          Worker to securely proxy API calls.
+        </div>
+        <div class="p-tags"><span>PWA</span><span>Cloudflare Workers</span><span>API</span></div>
+      </div>
+      <div class="p-arrow">↗</div>
+    </a>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="contact" id="contact">
+    <p class="eyebrow">// Let's talk</p>
+    <h2>Have a problem worth <em>digging into?</em></h2>
+    <a class="cta" href="mailto:you@example.com">you@example.com</a>
+    <div class="social">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Dillon</p>
+    <p>Built &amp; hosted on GitHub Pages</p>
+  </footer>
+</div>
+
+<script>
+  // shrink nav on scroll
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('shrink', scrollY > 40));
+
+  // scroll reveals
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
