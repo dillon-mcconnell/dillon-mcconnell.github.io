@@ -87,7 +87,45 @@
     transition: background 0.2s, color 0.2s;
   }
   .nav-links .nav-cta:hover { background: var(--blue); color: #fff; }
-  @media (max-width: 620px) { .nav-links { display: none; } }
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-burger span {
+    display: block;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  @media (max-width: 620px) {
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(230,232,230,0.97);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+      padding: 20px;
+      gap: 20px;
+    }
+    .nav-links.open .nav-cta { align-self: flex-start; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
 
   /* ---------- page content ---------- */
   .page-header {
@@ -186,6 +224,9 @@
     <a href="resume.html" class="active">Resume</a>
     <a href="contact.html" class="nav-cta">Get in touch</a>
   </div>
+  <button class="nav-burger" id="burger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <div class="wrap">
@@ -215,6 +256,12 @@
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => nav.classList.toggle('shrink', scrollY > 40));
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  const burger = document.getElementById('burger');
+  const navLinks = document.querySelector('.nav-links');
+  burger.addEventListener('click', () => { burger.classList.toggle('open'); navLinks.classList.toggle('open'); });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); navLinks.classList.remove('open'); }));
+  document.addEventListener('click', e => { if (!nav.contains(e.target)) { burger.classList.remove('open'); navLinks.classList.remove('open'); } });
 </script>
 </body>
 </html>
