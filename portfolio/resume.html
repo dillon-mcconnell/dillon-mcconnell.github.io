@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Dillon McConnell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e6e8e6;
+    --bg-warm: #f0f1f0;
+    --surface: #ffffff;
+    --line: #c8cac8;
+    --text: #080708;
+    --muted: #5c5b5f;
+    --faint: #9b9a9e;
+    --blue: #3772ff;
+    --red: #df2935;
+    --yellow: #fdca40;
+    --dark: #080708;
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--yellow); color: var(--dark); }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 36px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 36px;
+    transition: all 0.35s ease;
+  }
+  nav.shrink {
+    padding: 14px 36px;
+    background: rgba(230,232,230,0.92);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .brand {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--text); }
+  .nav-links .nav-cta {
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-links .nav-cta:hover { background: var(--blue); color: #fff; }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  /* ---------- page content ---------- */
+  .page-header {
+    padding: 120px 0 32px;
+  }
+  .page-header h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    letter-spacing: -0.025em;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .page-header p {
+    color: var(--muted);
+    font-size: 1.06rem;
+  }
+
+  .download-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .btn-download {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--blue);
+    padding: 10px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(55,114,255,0.25);
+  }
+  .btn-secondary {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 10px 22px;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+  .resume-page {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(8,7,8,0.08);
+  }
+  .resume-page img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="brand">Dillon McConnell</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="resume.html" class="active">Resume</a>
+    <a href="contact.html" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <h1>Resume</h1>
+  </div>
+
+  <div class="download-bar">
+    <!-- UPDATE: Change href to your PDF file path -->
+    <a class="btn-download" href="documents/resume.pdf" download>↓ Download PDF</a>
+  </div>
+
+  <!-- UPDATE: Replace src with an image of your resume -->
+  <!-- To create the image: open your PDF, screenshot or export as PNG -->
+  <!-- If your resume is multiple pages, add another .resume-page div below -->
+  <div class="resume-page">
+    <img src="images/resume.png" alt="Dillon McConnell resume, page 1">
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> Dillon McConnell</p>
+    <p>Built & hosted on GitHub Pages</p>
+  </footer>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('shrink', scrollY > 40));
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

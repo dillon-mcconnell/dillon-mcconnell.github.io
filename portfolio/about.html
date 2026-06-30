@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Dillon McConnell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e6e8e6;
+    --bg-warm: #f0f1f0;
+    --surface: #ffffff;
+    --line: #c8cac8;
+    --text: #080708;
+    --muted: #5c5b5f;
+    --faint: #9b9a9e;
+    --blue: #3772ff;
+    --red: #df2935;
+    --yellow: #fdca40;
+    --dark: #080708;
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--yellow); color: var(--dark); }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 36px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 36px;
+    transition: all 0.35s ease;
+  }
+  nav.shrink {
+    padding: 14px 36px;
+    background: rgba(230,232,230,0.92);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .brand {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--text); }
+  .nav-links .nav-cta {
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-links .nav-cta:hover { background: var(--blue); color: #fff; }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  /* ---------- intro section ---------- */
+  .intro {
+    padding: 120px 0 60px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .intro { grid-template-columns: 1fr; gap: 32px; }
+    .intro-photo { max-width: 240px; }
+  }
+  .intro-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+  }
+  .intro-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .intro-text h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    letter-spacing: -0.025em;
+    color: var(--dark);
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+  .intro-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+    margin-bottom: 28px;
+  }
+  .fact-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+  .fact-value {
+    font-family: var(--body);
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .intro-text p {
+    font-size: 1.06rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 16px;
+    max-width: 580px;
+  }
+  .intro-text p.dim { color: var(--muted); }
+
+  /* ---------- sections ---------- */
+  section { padding: 60px 0; }
+
+  .section-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    color: var(--dark);
+  }
+  .section-divider {
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---------- experience timeline ---------- */
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+  }
+  .timeline-item:last-child { border-bottom: 1px solid var(--line); }
+  @media (max-width: 680px) {
+    .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .tl-meta {
+    padding-top: 3px;
+  }
+  .tl-dates {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+    margin-bottom: 4px;
+  }
+  .tl-location {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .tl-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 6px;
+    color: var(--blue);
+    background: rgba(55,114,255,0.08);
+    border: 1px solid rgba(55,114,255,0.15);
+  }
+  .tl-content h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .tl-role {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .tl-content ul {
+    margin: 0 0 0 18px;
+    padding: 0;
+  }
+  .tl-content li {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- education ---------- */
+  .edu-card {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .edu-card h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .edu-degree {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--blue);
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .edu-details {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .edu-details span {
+    display: block;
+    margin-bottom: 2px;
+  }
+  .edu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .edu-date {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+
+  /* ---------- toolkit ---------- */
+  .toolkit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .toolkit-group {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .toolkit-group h4 {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .toolkit-group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toolkit-group li {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    padding: 4px 0;
+  }
+  /* colored left accents on toolkit groups */
+  .tk-yellow { border-left: 3px solid var(--yellow); }
+  .tk-blue   { border-left: 3px solid var(--blue); }
+  .tk-red    { border-left: 3px solid var(--red); }
+
+  /* ---------- reveal ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="brand">Dillon McConnell</a>
+  <div class="nav-links">
+    <a href="about.html" class="active">About</a>
+    <a href="resume.html">Resume</a>
+    <a href="contact.html" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ==================== INTRO ==================== -->
+  <div class="intro">
+    <div class="intro-photo">
+      <!-- UPDATE: Replace with your photo -->
+      <img src="images/headshot.jpg" alt="Dillon McConnell">
+    </div>
+    <div class="intro-text">
+      <h1>About Me</h1>
+      <div class="intro-facts">
+        <div>
+          <div class="fact-label">Based in</div>
+          <div class="fact-value">Chicago, IL</div>
+        </div>
+        <div>
+          <div class="fact-label">Currently</div>
+          <div class="fact-value">Associate Quantitative Analyst at Morningstar</div>
+        </div>
+        <div>
+          <div class="fact-label">Studying</div>
+          <div class="fact-value">M.S. Data Science, Indiana University</div>
+        </div>
+        <div>
+          <div class="fact-label">Focus</div>
+          <div class="fact-value">Analytics, investment research, data engineering</div>
+        </div>
+      </div>
+      <p>
+        <!-- UPDATE: Write your personal intro here -->
+        I work at the intersection of data and investment research, turning messy datasets into analysis that people actually trust and act on. I build the tools, write the queries, and produce the reports — sometimes all three in the same week.
+      </p>
+      <p class="dim">
+        <!-- UPDATE: Add more about yourself -->
+        Outside of work, I'm pursuing my M.S. in Data Science with a focus on statistical modeling, machine learning, and optimization. I like building things that make tedious work disappear.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ==================== EXPERIENCE ==================== -->
+  <section class="reveal">
+    <h2 class="section-title">Experience</h2>
+
+    <!-- UPDATE: Edit or add timeline items -->
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-dates">Sep 2023 — Present</div>
+        <div class="tl-location">Chicago, IL</div>
+        <span class="tl-badge">Current</span>
+      </div>
+      <div class="tl-content">
+        <h3>Morningstar</h3>
+        <div class="tl-role">Associate Quantitative Analyst</div>
+        <ul>
+          <li>Monitor markets for rapidly developing trends, transforming large datasets into insights featured in 500+ articles annually across publications including the New York Times, Wall Street Journal, and Financial Times.</li>
+          <li>Developed 20+ modular Python tools for recurring data pulls, with team-wide adoption cutting redundant effort and saving ~5 hours each week.</li>
+          <li>Created SQL queries in Amazon Athena to analyze fund portfolio data from the company's data lake, reducing manual processing time by ~90%.</li>
+          <li>Back-test the effects of different investment strategies, sector exposures, and factor-based portfolio allocations over time, assessing their risk and performance metrics.</li>
+          <li>Collaborate with research analysts on 12+ data-driven reports annually for external stakeholders, pairing extracted data and visualizations with expert commentary.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-dates">Jul 2022 — Sep 2023</div>
+        <div class="tl-location">Chicago, IL</div>
+      </div>
+      <div class="tl-content">
+        <h3>Morningstar</h3>
+        <div class="tl-role">Financial Product Specialist</div>
+        <ul>
+          <li>Completed an apprenticeship with the Morningstar DBRS Cash Flow Analytics team, gaining hands-on experience with quantitative financial modeling for credit evaluation.</li>
+          <!-- UPDATE: Add more bullet points -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- UPDATE: Add more experience items as needed -->
+    <!--
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-dates">Month Year — Month Year</div>
+        <div class="tl-location">City, ST</div>
+      </div>
+      <div class="tl-content">
+        <h3>Company Name</h3>
+        <div class="tl-role">Your Title</div>
+        <ul>
+          <li>What you did</li>
+        </ul>
+      </div>
+    </div>
+    -->
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ==================== EDUCATION ==================== -->
+  <section class="reveal">
+    <h2 class="section-title">Education</h2>
+
+    <div class="edu-card">
+      <div class="edu-top">
+        <h3>Indiana University, Luddy School of Informatics</h3>
+        <span class="edu-date">Expected May 2027</span>
+      </div>
+      <div class="edu-degree">Master of Science in Data Science</div>
+      <div class="edu-details">
+        <span>Specialization: Data Analytics & Visualization</span>
+        <span>Relevant Coursework: Statistics, Machine Learning, Optimization and Simulation, Artificial Intelligence</span>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-top">
+        <h3>Indiana University, Kelley School of Business</h3>
+        <span class="edu-date">May 2022</span>
+      </div>
+      <div class="edu-degree">Bachelor of Science in Business</div>
+      <div class="edu-details">
+        <span>Major: Entrepreneurship & Corporate Innovation</span>
+        <span>Minors: Human-Centered Computing (Luddy School of Informatics); Media (The Media School)</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ==================== TOOLKIT ==================== -->
+  <section class="reveal">
+    <h2 class="section-title">Toolkit</h2>
+
+    <div class="toolkit-grid">
+      <!-- UPDATE: Adjust categories and tools to fit your stack -->
+      <div class="toolkit-group tk-yellow">
+        <h4>Languages & ML</h4>
+        <ul>
+          <li>Python</li>
+          <li>R</li>
+          <li>scikit-learn</li>
+          <li>TensorFlow</li>
+        </ul>
+      </div>
+      <div class="toolkit-group tk-blue">
+        <h4>Data & Databases</h4>
+        <ul>
+          <li>SQL</li>
+          <li>AWS Athena</li>
+          <li>MongoDB</li>
+          <li>Neo4j</li>
+        </ul>
+      </div>
+      <div class="toolkit-group tk-red">
+        <h4>Visualization & Tools</h4>
+        <ul>
+          <li>Tableau</li>
+          <li>Excel</li>
+          <li>Git</li>
+          <li>Flourish</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Dillon McConnell</p>
+    <p>Built & hosted on GitHub Pages</p>
+  </footer>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('shrink', scrollY > 40));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
