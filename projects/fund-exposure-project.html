@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- UPDATE: Change the title for each project -->
@@ -327,7 +328,7 @@
 
 <!-- HERO IMAGE -->
 <!-- UPDATE: Replace src with your project screenshot -->
-<div class="wrap" style="max-width: 40%; max-height: 40%;">
+<div class="wrap" style="max-width: 50%; max-height: 50%;">
   <div class="project-hero">
     <img src="../images/fund-exposure-project-thumbnail.png" alt="Fund exposure chart preview">
   </div>
@@ -349,8 +350,10 @@
     <!-- UPDATE: Tags for this project -->
     <div class="project-tags">
       <span>Python</span>
+      <span>Morningstar Direct</span>
       <span>SQL</span>
       <span>Flourish</span>
+
     </div>
   </div>
 
@@ -360,49 +363,46 @@
 
     <h2>Overview</h2>
     <p>
-      Write a brief overview of the project here. What was the goal? What problem
-      were you solving? Who was it for?
+    Ahead of the most anticipated IPO wave in years, I dug into Morningstar holdings data to map which US mutual funds, ETFs, and closed-end funds were quietly building positions in SpaceX, OpenAI, and Anthropic while they were still private. Many investors did not realize they already owned a slice of these pre-IPO companies, or just how concentrated that slice was in some funds. 
     </p>
 
     <h2>Approach</h2>
-    <p>
-      Describe your methodology, the tools you used, and the decisions you made
-      along the way. This is where you can get technical and show your thinking.
-    </p>
+      <p>I started by pulling fund universe data through Morningstar Direct's Python API, building a list of every US-domiciled mutual fund, ETF, and closed-end fund, which included several thousand vehicles in total. This gave me the full population to screen, rather than relying on a hand-picked or pre-filtered sample like large tech or growth funds.<br>
+      <p>From there, I loaded the holdings data into AWS Athena and used SQL to search across all funds for private placement exposure to SpaceX, OpenAI, and Anthropic. Because these private placements can show up under different security naming conventions, share classes, and holding structures depending on the fund family reporting the data, this wasn't a simple WHERE clause. It required a series of CTEs to normalize security identifiers across funds, join fund-level metadata (family, category, AUM) against holdings-level data, and de-duplicate positions that were reported across multiple feeder funds or share classes of the same underlying vehicle. <br>
+      <p>Once I had a clean table of fund-level exposure, I calculated each holding's weight as a percentage of fund net assets so I could compare concentration on an apples-to-apples basis (i.e. a $50M stake means something very different in a $500M fund than in a $50B one).
 
     <!-- You can add inline images for charts, screenshots, etc. -->
     <!-- <img src="../images/project-1-detail.png" alt="Description of visual"> -->
 
     <h2>Key Findings</h2>
-    <p>
-      Summarize the results or key takeaways. What did the data reveal? What
-      impact did the work have?
-    </p>
-    <ul>
-      <li>Finding or result one</li>
-      <li>Finding or result two</li>
-      <li>Finding or result three</li>
-    </ul>
+      <ul>
+        <li>Large, diversified funds (i.e. American Funds Growth Fund of America) generally held small stakes in the three companies, typically under 1% of the fund.
+        <li>Smaller, concentrated funds — notably the Baron Capital fund family — held much larger positions; SpaceX reportedly made up over 25% of several Baron funds.
+        <li>Fidelity Contrafund took a middle approach: SpaceX was over 5% of the fund, while OpenAI and Anthropic stakes were each under 1%.
+        <li>Research Analyst from Morningstar was quoted explaining the rationale: managers want pre-IPO exposure to benefit from potential post-IPO price appreciation, and it doubles as a marketing draw for funds since most individual investors can't access these private shares directly.
+        <li>Investors may not realize their funds held these private stakes, may not grasp how concentrated some positions were, and this kind of large private-company exposure in mutual funds is a relatively new phenomenon tied to ballooning private valuations.
+      </ul>
 
-    <!-- You can include code snippets if relevant -->
-    <!--
-    <pre><code>import pandas as pd
-
-df = pd.read_csv("data.csv")
-df.groupby("fund").sum()</code></pre>
-    -->
-
-    <!-- You can include callout quotes -->
-    <!--
-    <blockquote>
-      An interesting insight or quote that came out of this work.
+      <blockquote>
+      “Not surprisingly, many stock fund managers have chosen to acquire shares of SpaceX and other very large private companies, including OpenAI and Anthropic. The hope of these managers is that by acquiring shares in the private, pre-IPO market, their funds and respective investors will benefit from the often-seen price appreciation that follows an IPO. While there is no guarantee of the price bump occurring, there is likely to be tremendous demand for shares in these companies following their high-profile IPOs, which may serve as a tailwind for share prices.  
+      <br><br>Additionally, there is a marketing component to the decision to buy these shares while still private, creating a sales pitch that investors can gain exposure to these sought after private companies. This is appealing as many individual investors could not do so on their own, and certainly not in as liquid a manner as some of these funds represent.   
+      <br><br>There are smaller funds, such as the Baron Capital lineup, which hold very large and highly concentrated exposures in these companies. Granted, these funds have different strategic and performance objectives than the larger funds, but the concentration is noteworthy. For example, SpaceX represents over 25% of several of the Baron Funds. Obviously, the short-term performance of these funds will be dictated by the success of the forthcoming SpaceX IPO. Other funds like Fidelity’s Contrafund are taking a mixed approach, where SpaceX accounts for over 5% of the fund, but Open AI and Anthropic are both under 1%.   
+      <br><br>While it’s too soon to say if these are good or bad decisions, they are noteworthy for a few reasons. One, investors may not be aware that these larger funds hold these private shares. Two, even if they are aware, they may not know of the large concentration levels the holdings represent in some of the funds. Finally, fund positions in private companies of this size were exceedingly rarer historically, and the recent explosion of private valuations significantly contributed to the change.” 
+      <footer>— Dominic Pappalardo, Chief Multi-Asset Strategist, Morningstar Wealth</footer>
     </blockquote>
-    -->
+
+    <h2>Visualization</h2>
+    <p>
+    I built an interactive visualization to explore fund-level exposure across all three companies — you can filter by fund family and sort by concentration.
+    </p>
+    <div class="flourish-embed flourish-hierarchy" data-src="visualisation/29225664"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29225664/thumbnail" width="100%" alt="hierarchy visualization" /></noscript></div>
+    
+    
+
 
   </div>
 
   <footer>
-    <p>© <span id="year"></span> Dillon McConnell</p>
     <p>Built & hosted on GitHub Pages</p>
   </footer>
 </div>

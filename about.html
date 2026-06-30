@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Dillon McConnell</title>
@@ -273,6 +274,24 @@
     margin-bottom: 6px;
   }
 
+  .tl-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .tl-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+
+
   /* ---------- education ---------- */
   .edu-card {
     background: var(--surface);
@@ -318,6 +337,21 @@
     font-size: 12.5px;
     color: var(--faint);
   }
+
+  .edu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.edu-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  flex-shrink: 0;
+}
 
   /* ---------- toolkit ---------- */
   .toolkit-grid {
@@ -381,6 +415,39 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  .dog-tooltip {
+  position: relative;
+  cursor: pointer;
+  color: #3772ff; /* matches your interactive-element blue */
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #3772ff;
+  text-underline-offset: 3px;
+}
+
+.dog-tooltip img {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  width: 160px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.dog-tooltip:hover img {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
 </style>
 </head>
 <body>
@@ -420,18 +487,16 @@
           <div class="fact-label">Studying</div>
           <div class="fact-value">M.S. Data Science, Indiana University</div>
         </div>
-        <div>
-          <div class="fact-label">Focus</div>
-          <div class="fact-value">Analytics, investment research, data engineering</div>
-        </div>
       </div>
       <p>
-        <!-- UPDATE: Write your personal intro here -->
-        I work at the intersection of data and investment research, turning messy datasets into analysis that people actually trust and act on. I build the tools, write the queries, and produce the reports — sometimes all three in the same week.
+        I grew up in Fishers, Indiana, and despite coming from a Purdue household, enrolled at Indiana University in the fall of 2018 (much to my family's chagrin). I graduated in 2022 with a business degree from the Kelley School of Business, along with two minors from the Luddy School of Informatics, Computing, and Engineering and The Media School.
       </p>
       <p class="dim">
-        <!-- UPDATE: Add more about yourself -->
-        Outside of work, I'm pursuing my M.S. in Data Science with a focus on statistical modeling, machine learning, and optimization. I like building things that make tedious work disappear.
+        I moved to Chicago that same summer and have been here ever since. I started out as a Financial Product Specialist at Morningstar, then leveraged what I learned in that role to move into my current position as an Associate Quantitative Analyst. I'm also currently pursuing my M.S. in Data Science, with a specialization in data analytics & visualization. Outside of work, I'm usually watching sports, playing video games, or hanging out with my dog
+        <span class="dog-tooltip">
+          Millie
+          <img src="images/millie.jpg" alt="Millie">
+        </span>.
       </p>
     </div>
   </div>
@@ -450,7 +515,10 @@
         <span class="tl-badge">Current</span>
       </div>
       <div class="tl-content">
-        <h3>Morningstar</h3>
+        <div class="tl-header">
+          <img class="tl-logo" src="images/morningstar.jpg" alt="Morningstar logo">
+          <h3>Morningstar</h3>
+        </div>
         <div class="tl-role">Associate Quantitative Analyst</div>
         <ul>
           <li>Monitor markets for rapidly developing trends, transforming large datasets into insights featured in 500+ articles annually across publications including the New York Times, Wall Street Journal, and Financial Times.</li>
@@ -468,31 +536,57 @@
         <div class="tl-location">Chicago, IL</div>
       </div>
       <div class="tl-content">
-        <h3>Morningstar</h3>
+        <div class="tl-header">
+          <img class="tl-logo" src="images/morningstar.jpg" alt="Morningstar logo">
+          <h3>Morningstar</h3>
+        </div>
         <div class="tl-role">Financial Product Specialist</div>
         <ul>
-          <li>Completed an apprenticeship with the Morningstar DBRS Cash Flow Analytics team, gaining hands-on experience with quantitative financial modeling for credit evaluation.</li>
-          <!-- UPDATE: Add more bullet points -->
+          <li>Conducted quantitative financial modeling for credit evaluation during an apprenticeship with the Morningstar DBRS Cash Flow Analytics team.</li>
+          <li>Authored internal documentation and knowledge-sharing resources; supported process-improvement initiatives across the team.</li>
+          <li>Resolved complex client issues and escalations as a go-to subject-matter resource on the firm's financial data methodologies, spanning thousands of data points.</li>
+          <li>Managed a high volume of concurrent client matters in a fast-paced environment, diagnosing and addressing issues directly while escalating complex cases when warranted.</li>
         </ul>
       </div>
     </div>
 
-    <!-- UPDATE: Add more experience items as needed -->
-    <!--
     <div class="timeline-item">
       <div class="tl-meta">
-        <div class="tl-dates">Month Year — Month Year</div>
-        <div class="tl-location">City, ST</div>
+        <div class="tl-dates">Jan 2020 — Jul 2022</div>
+        <div class="tl-location">Bloomington, IN</div>
       </div>
       <div class="tl-content">
-        <h3>Company Name</h3>
-        <div class="tl-role">Your Title</div>
+        <div class="tl-header">
+          <img class="tl-logo" src="images/yogis.jpg" alt="Yogi's Bar & Grill logo">
+          <h3>Yogi's Bar & Grill</h3>
+        </div>
+        <div class="tl-role">Server</div>
         <ul>
-          <li>What you did</li>
+          <li>Delivered exceptional customer service by effectively resolving issues, maintaining positive guest relationships, and ensuring repeat business through attentive and personalized service.</li>
+          <li>Prioritized tasks in a fast-paced environment by simultaneously responding to the needs of co-workers, managers, and up to 8 tables occupied by guests.</li>
         </ul>
       </div>
     </div>
-    -->
+
+    <div class="timeline-item">
+      <div class="tl-meta">
+        <div class="tl-dates">May 2017 — Aug 2019</div>
+        <div class="tl-location">Fishers, IN</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header">
+          <img class="tl-logo" src="images/whichwich.jpg" alt="WhichWich logo">
+          <h3>WhichWich</h3>
+        </div>
+        <div class="tl-role">Team Lead Manager</div>
+        <ul>
+          <li>Trained and supervised new hires to ensure tasks would be accomplished accurately and promptly according to the general manager's desires.</li>
+          <li>Acted as the first point of contact for customers that entered the store or placed calls, providing an enjoyable customer experience for both new and existing customers.</li>
+          <li>Ensured that the general manager's improved plan for running the business was followed accordingly, which orchestrated an increase of around $200/day in sales when compared to before.</li>
+        </ul>
+      </div>
+    </div>
+  
   </section>
 
   <div class="section-divider"></div>
@@ -503,8 +597,11 @@
 
     <div class="edu-card">
       <div class="edu-top">
-        <h3>Indiana University, Luddy School of Informatics</h3>
-        <span class="edu-date">Expected May 2027</span>
+        <div class="edu-header">
+          <img class="edu-logo" src="images/luddy.jpg" alt="Indiana University Luddy logo">
+          <h3>Indiana University, Luddy School of Informatics</h3>
+        </div>
+        <span class="tl-badge">Expected May 2027</span>
       </div>
       <div class="edu-degree">Master of Science in Data Science</div>
       <div class="edu-details">
@@ -515,7 +612,10 @@
 
     <div class="edu-card">
       <div class="edu-top">
-        <h3>Indiana University, Kelley School of Business</h3>
+        <div class="edu-header">
+          <img class="edu-logo" src="images/kelley.jpg" alt="Indiana University Kelley logo">
+          <h3>Indiana University, Kelley School of Business</h3>
+        </div>
         <span class="edu-date">May 2022</span>
       </div>
       <div class="edu-degree">Bachelor of Science in Business</div>
@@ -565,7 +665,6 @@
   </section>
 
   <footer>
-    <p>© <span id="year"></span> Dillon McConnell</p>
     <p>Built & hosted on GitHub Pages</p>
   </footer>
 </div>
