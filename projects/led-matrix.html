@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- UPDATE: Change the title for each project -->
@@ -428,6 +428,43 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    .tooltip {
+  position: relative;
+  cursor: pointer;
+  color: #3772ff;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: #3772ff;
+  text-underline-offset: 3px;
+}
+
+.tooltip img {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tooltip:hover img {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+#daisy-chain-tooltip img {
+  width: 400px;
+}
+
   </style>
 </head>
 
@@ -490,20 +527,30 @@
         across several sports and leagues (NFL, NBA, College Basketball, College Football, NHL, MLB, and Soccer).
       </p>
 
-      <h2>Approach</h2>
+      <h2>Inspiration</h2>
+      <img src="../images/ppp_led.jpg" alt="Scrolling sports ticker at Parks Place Pub">
       <p>
-        Describe your methodology, the tools you used, and the decisions you made
-        along the way. This is where you can get technical and show your thinking.
+        The idea for this project started at <a href="https://www.parksplacepub.com/">Parks Place Pub</a>, a bar back in my hometown of Fishers, Indiana. It's one of my favorite spots to grab a beer and catch up with friends or family whenever I'm back in town. Every time I walked in, I'd end up staring at the scrolling sports ticker running across the top of the bar, showing live scores from whatever games were on. I always thought it was such a cool way to keep track of scores without needing to flip between different TVs, and I wanted to build my own version of it.
       </p>
+
+      <h2>Credit Where It's Due</h2>
+      <p>Before getting into the build, I want to give credit where it's due: a lot of this project was made possible by <a href="https://github.com/ChuckBuilds/LEDMatrix">ChuckBuilds</a>, who put together detailed documentation on his GitHub repo for building this exact kind of display. I leaned on his guide heavily throughout the process, and honestly, I would've been lost without it.</p>
 
       <!-- You can add inline images for charts, screenshots, etc. -->
       <!-- <img src="../images/project-1-detail.png" alt="Description of visual"> -->
 
-      <h2>Key Findings</h2>
+      <h2>The Build</h2>
       <p>
-        Summarize the results or key takeaways. What did the data reveal? What
-        impact did the work have?
+      Using Chuck's guide, I knew exactly what parts I needed to get started. Chuck's own example used two panels, but I wanted to go bigger and build a longer display, so I ordered four 64x32 LED matrix panels from Adafruit with a 4mm pixel pitch to line up horizontally. I also got a Raspberry Pi and an Adafruit RGB Matrix Bonnet/HAT to connect everything together. Most of these parts ended up being part of my Christmas gifts, courtesy of my girlfriend.
       </p>
+      <p>Once I got all the parts and started assembling everything, I quickly realized I'd bitten off more than I was ready to chew. First, setting up the Raspberry Pi meant using the terminal on my PC and running Linux commands, which I wasn't very comfortable with. Luckily, Chuck's guide had a one-time setup command I could run on the Pi that handled most of it for me.</p>
+
+      <p>Next, I had to figure out how to <span class="tooltip" id="daisy-chain-tooltip">daisy chain and power all four displays<img src="../images/power.jpg" alt="Daisy chaining and powering the panels"></span>, since Chuck's original build was only designed for two. I called up my dad, who has a degree in electrical engineering, to help me work through the wiring. After we got it figured out, I hooked everything up and tried to turn the display on, only to find out the power supply I bought wasn't strong enough to run it. I ended up having to order a stronger one.</p>
+
+      <p>Even after I got the display powered on, it was flickering badly. Back to Chuck's guide and the internet I went, and I learned the fix required modifying my RGB Matrix Bonnet by <span class="tooltip">soldering a jumper between two of its pins<img src="../images/solder.jpg" alt="Soldering jumper"></span>, which improves brightness, reduces flicker, and gives better color. I'd never soldered anything before, so that was its own learning curve.</p>
+
+      <p>All in, this part of the process took about a month. It was a lot of trial and error, and a lot of leaning on people who knew more than me about electronics. Eventually, I got it working, which left me with one more problem: where was I actually going to put this thing?</p>
+      
       <ul>
         <li>Finding or result one</li>
         <li>Finding or result two</li>
