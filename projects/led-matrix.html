@@ -559,6 +559,23 @@
       <img src="../images/bracket-design.jpg" alt="CAD designed bracket">
       <p>Besides the 3D printer making this project a bit more expensive than I was expecting, this ended up being one of the most fun parts of the process — learning how to design in CAD and print my own parts. And once I had the printer, I ended up printing all kinds of useful stuff for the house too.</p>
       <img src="../images/printer-gif.GIF" alt="3D printer in action">
+
+      <h2>The Woodworking</h2>
+      <p>This was the part of the project I was most excited about. I have fond memories of woodworking and building things with my dad and grandpa growing up: a dog house, a bird house, that kind of thing. I did some research on what wood and stain to buy and settled on oak with a walnut polyurethane stain. I picked up some long planks of wood and a Japanese pull saw and got to work.</p>
+
+      <p>Turns out a Japanese pull saw wasn't the best tool for this kind of job. Doing the cutting in the kitchen of my small Chicago apartment didn't make my girlfriend too happy either. So back to Home Depot I went — this time to rent a circular saw — and I took the cutting outside. From there, I sanded and stained the wood (making quite the mess along the way), checked that the LED panels actually fit inside, and then glued and screwed all the pieces together.</p>
+      <img src="../images/woodworking.jpg" alt="Woodworking in progress">
+
+      <h2>Making a Custom Plugin</h2>
+      <p>With the hardware done, it was time to make the display actually show what I wanted. Chuck's project came with plugins for displaying sports scores, but they didn't have the scrolling ticker effect I was looking for. The code inside those plugins was a bit above my pay grade, and honestly, I found it pretty intimidating. So I decided to give Claude Code a try for the first time, and it ended up being a pleasant surprise.</p>
+
+      <p>I gave it access to some of Chuck's existing plugins and told it what I wanted: connections to seven leagues (NFL, NBA, College Basketball, College Football, NHL, MLB, and Soccer), all pulling from ESPN's API. For each game, it needed to show the start time and betting lines if the game was upcoming, live scores if the game was in progress, or final scores if it had ended. And all of it needed to scroll horizontally across the display like a real ticker.</p>
+
+      <p>To my amazement, it came out nearly perfect on the first try. I made a few more tweaks from there: limiting college sports to custom teams, conferences, and Top 25 matchups so the ticker didn't get overloaded, uploading custom logos for each league, and setting it up to cycle from one sport to the next once it finished scrolling through.</p>
+
+      <p>There are plenty of other plugins I'd like to build eventually, like weather updates, news headlines, or real-time arrival times for the CTA trains at the station near me (which would be useful for knowing when to leave for work). I haven't gotten around to those yet. But I built this thing to have live sports scores in my office, and I accomplished exactly that, which I'm pretty proud of.</p>
+
+      <img src="../images/led-matrix-2.gif" alt="LED Matrix preview">
       <!-- You can include code snippets if relevant -->
       <!--
     <pre><code>import pandas as pd
