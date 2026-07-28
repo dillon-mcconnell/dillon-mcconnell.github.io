@@ -5,8 +5,7 @@
   <link rel="icon" type="image/png" href="../images/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- UPDATE: Change the title for each project -->
-  <title>Fund Exposure to SpaceX, Anthropic, and OpenAI — Dillon McConnell</title>
+  <title>SpaceX's First Month as a Public Company — Dillon McConnell</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -210,22 +209,6 @@
       padding: 48px 0 0;
     }
 
-    .back-link {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--blue);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 28px;
-      transition: opacity 0.2s;
-    }
-
-    .back-link:hover {
-      opacity: 0.7;
-    }
-
     .project-header h1 {
       font-family: var(--display);
       font-weight: 700;
@@ -320,6 +303,17 @@
       max-width: 640px;
     }
 
+    .project-content a {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(55, 114, 255, 0.35);
+      transition: border-color 0.2s;
+    }
+
+    .project-content a:hover {
+      border-bottom-color: var(--blue);
+    }
+
     .project-content ul,
     .project-content ol {
       margin: 0 0 18px 20px;
@@ -375,32 +369,11 @@
       margin: 24px 0;
       color: var(--muted);
       font-style: italic;
+      max-width: 640px;
     }
 
-    /* ---------- project nav (prev/next) ---------- */
-    .project-nav {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 32px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .project-nav a {
-      font-family: var(--display);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--blue);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
-    .project-nav a:hover {
-      opacity: 0.7;
-    }
-
-    .project-nav .next {
-      margin-left: auto;
+    .quote-lead {
+      margin-bottom: 8px !important;
     }
 
     /* ---------- footer ---------- */
@@ -428,15 +401,12 @@
         transition-duration: 0.01ms !important;
       }
     }
-
-
-    
   </style>
 </head>
 
 <body>
 
-  <!-- NAV — same as index.html but paths go up one level with ../ -->
+  <!-- NAV -->
   <nav id="nav">
     <a href="../index.html" class="brand">Dillon McConnell</a>
     <div class="nav-links">
@@ -451,10 +421,9 @@
   </nav>
 
   <!-- HERO IMAGE -->
-  <!-- UPDATE: Replace src with your project screenshot -->
   <div class="wrap" style="max-width: 50%; max-height: 50%;">
     <div class="project-hero">
-      <img src="../images/fund-exposure-project-thumbnail.png" alt="Fund exposure chart preview">
+      <img src="../images/SPCX-thumbnail.jpg" alt="SpaceX market capitalization since IPO">
     </div>
   </div>
 
@@ -462,122 +431,92 @@
   <div class="wrap-narrow">
     <div class="project-header">
 
-      <!-- UPDATE: Project title -->
-      <h1>Fund Exposure to SpaceX, Anthropic, and OpenAI</h1>
+      <h1>SpaceX's Turbulent First Month as a Public Company</h1>
 
       <div class="project-meta">
-        <!-- UPDATE: Year and category (use cat-pro, cat-acad, or cat-pers) -->
-        <span class="meta-year">June 2026</span>
+        <span class="meta-year">July 2026</span>
         <span class="meta-category cat-pro">Professional</span>
       </div>
 
-      <!-- UPDATE: Tags for this project -->
       <div class="project-tags">
-        <span>Python</span>
         <span>Morningstar Direct</span>
-        <span>SQL</span>
+        <span>Excel</span>
         <span>Flourish</span>
-
       </div>
     </div>
 
     <!-- PROJECT CONTENT -->
-    <!-- UPDATE: Write your project description below -->
     <div class="project-content">
 
       <h2>Overview</h2>
       <p>
-        Ahead of the most anticipated IPO wave in years, I dug into Morningstar holdings data to map which US mutual
-        funds, ETFs, and closed-end funds were quietly building positions in SpaceX, OpenAI, and Anthropic while they
-        were still private. Many investors did not realize they already owned a slice of these pre-IPO companies, or
-        just how concentrated that slice was in some funds.
+        A month earlier I had used Morningstar holdings data to <a href="fund-exposure-project.html">flag the mutual funds
+        holding pre-IPO stakes in SpaceX</a>. Then the company went public, and the debut turned out to be one of the
+        wildest in recent memory. The stock priced at a $1.8 trillion market cap, ran up to a peak of nearly $2.7
+        trillion, and sat at $1.9 trillion as of the July 10 close. I pulled daily pricing and market cap data from
+        Morningstar Direct to track those swings and built a set of charts covering the first month.
       </p>
 
-      <h2>Approach</h2>
-      <p>I started by pulling fund universe data through Morningstar Direct's Python API, building a list of every
-        US-domiciled mutual fund, ETF, and closed-end fund, which included several thousand vehicles in total. This gave
-        me the full population to screen, rather than relying on a hand-picked or pre-filtered sample like large tech or
-        growth funds.<br>
-      <p>From there, I loaded the holdings data into AWS Athena and used SQL to search across all funds for private
-        placement exposure to SpaceX, OpenAI, and Anthropic. Because these private placements can show up under
-        different security naming conventions, share classes, and holding structures depending on the fund family
-        reporting the data, this wasn't a simple WHERE clause. It required a series of CTEs to normalize security
-        identifiers across funds, join fund-level metadata (family, category, AUM) against holdings-level data, and
-        de-duplicate positions that were reported across multiple feeder funds or share classes of the same underlying
-        vehicle. <br>
-      <p>Once I had a clean table of fund-level exposure, I calculated each holding's weight as a percentage of fund net
-        assets so I could compare concentration on an apples-to-apples basis (i.e. a $50M stake means something very
-        different in a $500M fund than in a $50B one).
-
-        <!-- You can add inline images for charts, screenshots, etc. -->
-        <!-- <img src="../images/project-1-detail.png" alt="Description of visual"> -->
-
-      <h2>Key Findings</h2>
-      <ul>
-        <li>Large, diversified funds (i.e. American Funds Growth Fund of America) generally held small stakes in the
-          three companies, typically under 1% of the fund.
-        <li>Smaller, concentrated funds — notably the Baron Capital fund family — held much larger positions; SpaceX
-          reportedly made up over 25% of several Baron funds.
-        <li>Fidelity Contrafund took a middle approach: SpaceX was over 5% of the fund, while OpenAI and Anthropic
-          stakes were each under 1%.
-        <li>Research Analyst from Morningstar was quoted explaining the rationale: managers want pre-IPO exposure to
-          benefit from potential post-IPO price appreciation, and it doubles as a marketing draw for funds since most
-          individual investors can't access these private shares directly.
-        <li>Investors may not realize their funds held these private stakes, may not grasp how concentrated some
-          positions were, and this kind of large private-company exposure in mutual funds is a relatively new phenomenon
-          tied to ballooning private valuations.
-      </ul>
-
-      <blockquote>
-        “Not surprisingly, many stock fund managers have chosen to acquire shares of SpaceX and other very large private
-        companies, including OpenAI and Anthropic. The hope of these managers is that by acquiring shares in the
-        private, pre-IPO market, their funds and respective investors will benefit from the often-seen price
-        appreciation that follows an IPO. While there is no guarantee of the price bump occurring, there is likely to be
-        tremendous demand for shares in these companies following their high-profile IPOs, which may serve as a tailwind
-        for share prices.
-        <br><br>Additionally, there is a marketing component to the decision to buy these shares while still private,
-        creating a sales pitch that investors can gain exposure to these sought after private companies. This is
-        appealing as many individual investors could not do so on their own, and certainly not in as liquid a manner as
-        some of these funds represent.
-        <br><br>There are smaller funds, such as the Baron Capital lineup, which hold very large and highly concentrated
-        exposures in these companies. Granted, these funds have different strategic and performance objectives than the
-        larger funds, but the concentration is noteworthy. For example, SpaceX represents over 25% of several of the
-        Baron Funds. Obviously, the short-term performance of these funds will be dictated by the success of the
-        forthcoming SpaceX IPO. Other funds like Fidelity’s Contrafund are taking a mixed approach, where SpaceX
-        accounts for over 5% of the fund, but Open AI and Anthropic are both under 1%.
-        <br><br>While it’s too soon to say if these are good or bad decisions, they are noteworthy for a few reasons.
-        One, investors may not be aware that these larger funds hold these private shares. Two, even if they are aware,
-        they may not know of the large concentration levels the holdings represent in some of the funds. Finally, fund
-        positions in private companies of this size were exceedingly rarer historically, and the recent explosion of
-        private valuations significantly contributed to the change.”
-        <footer>— Dominic Pappalardo, Chief Multi-Asset Strategist, Morningstar Wealth</footer>
-      </blockquote>
-
-      <h2>Visualization</h2>
+      <h2>What the Data Showed</h2>
       <p>
-        I built a visualization to explore fund-level exposure across all three companies. You can filter
-        by company and examine fund position weights and market value. Interact with it below:
+        Roughly $800 billion in market cap was erased between the peak and the July 10 close. That was more than the
+        entire value of household names like Visa, Exxon Mobil, or Coca-Cola. The sharpest stretch came between June 16 and June 22, when
+        SpaceX shed more than $600 billion in under a week.
       </p>
-      <div class="flourish-embed flourish-hierarchy" data-src="visualisation/29225664">
-        <script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img
-            src="https://public.flourish.studio/visualisation/29225664/thumbnail" width="100%"
-            alt="hierarchy visualization" /></noscript>
+      <p>
+        Even after all of that, SpaceX ranked as the 7th most valuable publicly traded company in the world, sitting
+        just behind TSMC and ahead of Broadcom and Saudi Aramco.
+      </p>
+      <p>
+        I also wanted context for whether the drop was unusual, so I compared SpaceX's post-IPO returns against other
+        heavily anticipated listings from the past decade over the same number of trading days. Measured that way it
+        looked worse, not better. SpaceX was down almost 10% through 18 trading days, second worst in the group. Only Arm
+        had a rougher start, while Robinhood and Rivian ran far hotter early on.
+      </p>
+
+      <h2>Why the Volatility</h2>
+      <p class="quote-lead">
+        Morningstar equity analyst Nicolas Owens tied the swings to a gap between investor enthusiasm and the growth
+        assumptions already priced into the shares:
+      </p>
+      <blockquote>
+        "In our opinion, the offering implies that investors have already priced in flawless execution across multiple
+        unproven frontiers (reusable Starship, orbital data centers) simultaneously. The offering price appears to bake
+        in optimistic execution scenarios from the outset. As a result, even modest shortfalls or
+        disappointments, whether in launch cadence, data center commercialization, Starlink growth, or regulatory
+        approvals, should prompt corrections to the company's valuation. In our view, the IPO valuation offers limited
+        upside for long-term oriented investors, but the risk of a downside surprise is significant."
+      </blockquote>
+      <p>
+        His full note is available
+        <a
+          href="https://assets.contentstack.io/v3/assets/blt9415ea4cc4157833/blt30388a7d142f0879/6a2812eea91e1130342161a8/One_Small_Step_for_SpaceX.pdf"
+          target="_blank" rel="noopener">here</a>.
+      </p>
+
+      <h2>Visualizations</h2>
+      <p>
+        The charts below cover the market cap timeline, where SpaceX landed among the world's most valuable public
+        companies, and how its early trading compared with other closely watched IPOs. You can also open the
+        <a href="https://public.flourish.studio/story/3721691/" target="_blank" rel="noopener">full version</a> in a new
+        tab.
+      </p>
+      <div class="flourish-embed" data-src="story/3721691">
+        <script src="https://public.flourish.studio/resources/embed.js"></script>
+        <noscript><img src="https://public.flourish.studio/story/3721691/thumbnail" width="100%"
+            alt="SpaceX IPO visualizations" /></noscript>
       </div>
-
-
-
 
     </div>
 
     <footer>
-      <p>Built & hosted on GitHub Pages</p>
+      <p>Built &amp; hosted on GitHub Pages</p>
     </footer>
   </div>
 
   <script>
     const nav = document.getElementById('nav');
     addEventListener('scroll', () => nav.classList.toggle('shrink', scrollY > 40));
-
 
     const burger = document.getElementById('burger');
     const navLinks = document.querySelector('.nav-links');
